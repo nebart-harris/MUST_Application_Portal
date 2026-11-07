@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUST Online Application Portal — Design Demo</title>
+  <style>
+    :root {
+      --purple: #3432b7;
+      --purple-dark: #2f2da8;
+      --ink: #171d2a;
+      --muted: #87919d;
+      --line: #e9ebef;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(145deg, #e9eaff 0%, #f3f7ff 52%, #eef7ff 100%);
+    }
+
+    .portal {
+      width: 100%;
+      max-width: 626px;
+    }
+
+    .brand {
+      text-align: center;
+      margin: 0 auto 20px;
+    }
+
+    .crest {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 7px 25px rgba(40, 48, 105, .09);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* A simple original crest placeholder, not the university's official logo. */
+    .crest-inner {
+      width: 55px;
+      height: 55px;
+      border: 2px solid #d8c76e;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #263b79;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      position: relative;
+    }
+
+    .crest-inner::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid #b5a44d;
+      border-radius: 3px;
+    }
+
+    .crest-inner span {
+      background: #fff;
+      z-index: 1;
+      padding: 2px;
+    }
+
+    .brand h1 {
+      max-width: 590px;
+      margin: 0 auto 11px;
+      font-size: 27px;
+      line-height: 1.16;
+      font-weight: 800;
+      letter-spacing: .1px;
+    }
+
+    .portal-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 45px;
+      padding: 0 22px;
+      border-radius: 28px;
+      background: #e0e2ff;
+      color: #343583;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .login-card {
+      width: 100%;
+      padding: 30px 28px 22px;
+      border: 1px solid rgba(235, 238, 245, .9);
+      border-radius: 21px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(39, 52, 90, .06);
+    }
+
+    .view-title {
+      margin: 0 0 8px;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -.25px;
+    }
+
+    .intro {
+      margin: 0 0 27px;
+      color: #858d96;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field { margin-bottom: 23px; }
+
+    .field label {
+      display: block;
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .input-shell {
+      height: 53px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #e9eaed;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(30, 40, 60, .025);
+    }
+
+    .input-shell:focus-within {
+      border-color: #8c8ae0;
+      box-shadow: 0 0 0 3px rgba(52, 50, 183, .08);
+    }
+
+    .input-icon {
+      width: 51px;
+      height: 100%;
+      flex: 0 0 51px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid #f0f1f3;
+      color: #718093;
+    }
+
+    .input-icon svg, .eye svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .input-shell input {
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      padding: 0 14px;
+      border: 0;
+      outline: 0;
+      color: #263044;
+      background: transparent;
+      font: inherit;
+      font-size: 16px;
+    }
+
+    .input-shell input::placeholder { color: #9ca3aa; opacity: 1; }
+
+    .eye {
+      height: 100%;
+      width: 47px;
+      flex: 0 0 47px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #718093;
+      cursor: pointer;
+    }
+
+    .sign-in {
+      width: 100%;
+      height: 57px;
+      margin-top: 4px;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(100deg, #3735c1, #302eaa);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 23px rgba(52, 50, 183, .20);
+    }
+
+    .sign-in:hover { filter: brightness(1.04); }
+
+    .forgot-row { margin: 23px 0 28px; }
+
+    .link-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #7d8793;
+      font: inherit;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .link-button:hover { color: var(--purple); }
+
+    .key-icon { color: #748294; font-size: 20px; margin-right: 7px; }
+
+    .separator {
+      height: 1px;
+      background: #f0f1f4;
+      margin: 0 0 15px;
+    }
+
+    .new-here {
+      text-align: center;
+      margin: 0 0 18px;
+      color: #9aa3af;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .bottom-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .create-account, .how-apply {
+      min-height: 54px;
+      border-radius: 13px;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .create-account {
+      flex: 1;
+      border: 1px solid #8ec8d6;
+      color: #1678b0;
+    }
+
+    .how-apply {
+      flex: 0 0 158px;
+      border: 1px solid #c8cbd0;
+      color: #5e6873;
+    }
+
+    .create-account:hover, .how-apply:hover { background: #f9fbff; }
+
+    .back-button {
+      margin: 0 0 20px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--purple);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .notice {
+      display: none;
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .notice.show { display: block; }
+    .notice.error { color: #9b2632; background: #fff0f1; }
+    .notice.success { color: #176c42; background: #eaf9f0; }
+
+    .hidden { display: none !important; }
+
+    .dashboard-panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 17px;
+      margin: 20px 0;
+    }
+
+    .dashboard-panel p { color: var(--muted); font-size: 14px; margin-bottom: 0; }
+
+    .fine-print {
+      margin: 18px 0 0;
+      text-align: center;
+      color: #9ca5b1;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 24px 13px; }
+      .crest { width: 76px; height: 76px; }
+      .brand h1 { font-size: 22px; }
+      .portal-tag { min-height: 40px; font-size: 13px; }
+      .login-card { padding: 25px 19px 20px; border-radius: 18px; }
+      .view-title { font-size: 22px; }
+      .field label { font-size: 16px; }
+      .input-shell input { font-size: 14px; }
+      .bottom-actions { flex-direction: column; }
+      .how-apply { flex: auto; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="portal">
+    <header class="brand">
+      <div class="crest" aria-label="Decorative university crest placeholder">
+        <div class="crest-inner"><span>MUST</span></div>
+      </div>
+      <h1>MBARARA UNIVERSITY OF SCIENCE AND TECHNOLOGY</h1>
+      <div class="portal-tag">Online Application Portal</div>
+    </header>
+
+    <section class="login-card">
+      <div id="loginView">
+        <h2 class="view-title">Welcome Back</h2>
+        <p class="intro">Log in to access your application dashboard</p>
+        <div id="loginNotice" class="notice" role="status"></div>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Email Address</label>
+            <div class="input-shell">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a2 2 0 0 1 2 2v1l-11 7L1 8V7a2 2 0 0 1 2-2zm-2 5.4 10.4 6.7a1.1 1.1 0 0 0 1.2 0L23 10.4V17a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z"/></svg>
+              </span>
+              <input id="loginEmail" type="email" placeholder="name@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <div class="input-shell">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3zM10 7a2 2 0 0 1 4 0v2h-4zm3 10.7V19h-2v-1.3a2 2 0 1 1 2 0z"/></svg>
+              </span>
+              <input id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button class="eye" type="button" data-toggle="loginPassword" aria-label="Show or hide password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="sign-in" type="submit">⇥ Sign In</button>
+        </form>
+
+        <div class="forgot-row">
+          <button class="link-button" id="forgotButton" type="button"><span class="key-icon"></span>Forgot your password?</button>
+        </div>
+
+        <div class="separator"></div>
+        <div class="new-here">New to the portal?</div>
+        <div class="bottom-actions">
+          <button class="create-account" id="showSignup" type="button">♟ Create Account</button>
+          <button class="how-apply" id="howApply" type="button">ⓘ How to Apply</button>
+        </div>
+      </div>
+
+      <div id="signupView" class="hidden">
+        <button class="back-button" id="backToLogin" type="button">← Back to sign in</button>
+        <h2 class="view-title">Create Account</h2>
+        <p class="intro">Register to begin your online application</p>
+        <div id="signupNotice" class="notice" role="status"></div>
+
+        <form id="signupForm">
+          <div class="field">
+            <label for="fullName">Full Name</label>
+            <div class="input-shell"><span class="input-icon" aria-hidden="true">♟</span><input id="fullName" type="text" placeholder="Enter your full name" autocomplete="name" minlength="2" required></div>
+          </div>
+          <div class="field">
+            <label for="signupEmail">Email Address</label>
+            <div class="input-shell"><span class="input-icon" aria-hidden="true">✉</span><input id="signupEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
+          </div>
+          <div class="field">
+            <label for="signupPassword">Password</label>
+            <div class="input-shell"><span class="input-icon" aria-hidden="true">🔒</span><input id="signupPassword" type="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required><button class="eye" type="button" data-toggle="signupPassword" aria-label="Show or hide password">◉</button></div>
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="input-shell"><span class="input-icon" aria-hidden="true">🔒</span><input id="confirmPassword" type="password" placeholder="Enter password again" minlength="8" autocomplete="new-password" required></div>
+          </div>
+          <button class="sign-in" type="submit">Create Account</button>
+        </form>
+        <p class="fine-print">Class project prototype. Do not use a real password.</p>
+      </div>
+
+      <div id="dashboardView" class="hidden">
+        <h2 class="view-title">Welcome to your dashboard!</h2>
+        <p class="intro" id="welcomeText">You have signed in.</p>
+        <div class="notice success show">You are signed in to this local demonstration.</div>
+        <div class="dashboard-panel"><strong>Application Status</strong><p>No application submitted yet.</p></div>
+        <button class="sign-in" id="signOut" type="button">Sign Out</button>
+      </div>
+
+      <p class="fine-print"></p>
+    </section>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const views = [$("loginView"), $("signupView"), $("dashboardView")];
+
+    function showView(view) {
+      views.forEach(item => item.classList.add("hidden"));
+      view.classList.remove("hidden");
+      clearNotices();
+    }
+
+    function clearNotices() {
+      ["loginNotice", "signupNotice"].forEach(id => {
+        $(id).className = "notice";
+        $(id).textContent = "";
+      });
+    }
+
+    function notify(id, text, type = "error") {
+      $(id).textContent = text;
+      $(id).className = "notice show " + type;
+    }
+
+    function readUsers() {
+      try {
+        return JSON.parse(localStorage.getItem("mustPortalDemoUsers") || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    document.querySelectorAll("[data-toggle]").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = $(button.dataset.toggle);
+        input.type = input.type === "password" ? "text" : "password";
+      });
+    });
+
+    $("showSignup").addEventListener("click", () => showView($("signupView")));
+    $("backToLogin").addEventListener("click", () => showView($("loginView")));
+
+    $("signupForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const name = $("fullName").value.trim();
+      const email = $("signupEmail").value.trim().toLowerCase();
+      const password = $("signupPassword").value;
+      const confirmation = $("confirmPassword").value;
+
+      if (password !== confirmation) {
+        notify("signupNotice", "The passwords do not match. Please try again.");
+        return;
+      }
+
+      const users = readUsers();
+      if (users[email]) {
+        notify("signupNotice", "An account with this email already exists.");
+        return;
+      }
+
+      // Demonstration only: production accounts must use a secure server and password hashing.
+      users[email] = { name, password };
+
+      try {
+        localStorage.setItem("mustPortalDemoUsers", JSON.stringify(users));
+      } catch {
+        notify("signupNotice", "Browser storage is unavailable. Please try another browser.");
+        return;
+      }
+
+      $("signupForm").reset();
+      showView($("loginView"));
+      $("loginEmail").value = email;
+      notify("loginNotice", "Demo account created! You can now sign in.", "success");
+    });
+
+    $("loginForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const email = $("loginEmail").value.trim().toLowerCase();
+      const password = $("loginPassword").value;
+      const users = readUsers();
+
+      if (!users[email] || users[email].password !== password) {
+        notify("loginNotice", "Account not found or password incorrect. Create an account first or check your details.");
+        return;
+      }
+
+      $("welcomeText").textContent = "Welcome, " + users[email].name + ". This is your student application dashboard.";
+      showView($("dashboardView"));
+    });
+
+    $("signOut").addEventListener("click", () => {
+      $("loginPassword").value = "";
+      showView($("loginView"));
+    });
+
+    $("forgotButton").addEventListener("click", () => {
+      notify("loginNotice", "Password recovery is a design demonstration. A real portal needs a secure password-reset process.", "success");
+    });
+
+    $("howApply").addEventListener("click", () => {
+      notify("loginNotice", "Create an account, sign in, complete the application form, and submit the required documents. This prototype does not submit real applications.", "success");
+    });
+  </script>
+</body>
+</html>
